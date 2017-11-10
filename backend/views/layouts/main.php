@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\widgets\Menu;
 use common\widgets\Alert;
 
 AppAsset::register($this);
@@ -82,6 +83,16 @@ AppAsset::register($this);
                       <li> <?php echo Html::a('<i class="fa fa-angle-right" aria-hidden="true"></i> Customer',['customer-upload-details/index']) ?></li>
                     </ul>
                 </li>
+
+
+                <li class="sub-menu">
+                    <a href="javascript:;" >
+                        <i class="fa fa-cog" aria-hidden="true"></i> <span>Settings</span>
+                      </a>
+                    <ul class="sub">
+                        <li> <?php echo Html::a('<i class="fa fa-angle-right" aria-hidden="true"></i> Gii',['gii/default']) ?></li>
+                    </ul>
+                </li>
                 <!---<li class="mt"> Extra Main Menu
                     <a href="<?php echo Yii::$app->homeUrl ?>">
                         <i class="fa fa-dashboard"></i>
@@ -122,6 +133,18 @@ AppAsset::register($this);
 
 
 </section>
+
+<footer class="site-footer">
+         <div class="text-center">
+             2014 - Alvarez.is
+             <!---
+             <a href="index.html#" class="go-top">
+                 <i class="fa fa-angle-up"></i>
+             </a>--->
+         </div>
+     </footer>
+
+
 
 
 <?php $this->endBody() ?>
