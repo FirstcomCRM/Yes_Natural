@@ -96,7 +96,7 @@ class CustomerUploadDetailsController extends Controller
               Yii::$app->session->setFlash('success',"Update Success");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-          
+
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -121,6 +121,9 @@ class CustomerUploadDetailsController extends Controller
     * @param integer $id
     */
     public function actionDownloadPdf(){
+      ini_set('max_execution_time', 180);
+      ini_set("memory_limit", "512M");
+
       $searchModel = new CustomerUploadDetailsSearch();
       $dataProvider = $searchModel->search(Yii::$app->session->get('details'));
 
@@ -131,7 +134,7 @@ class CustomerUploadDetailsController extends Controller
          'dataProvider'=>$dataProvider
        ]);
 
-      $mpdf->simpleTables =  true;
+    //  $mpdf->simpleTables =  true;
     //  $mpdf->useSubstitutions=false;
     //  $mpdf->packTableData = true;
       $mpdf->setFooter('{PAGENO}');
