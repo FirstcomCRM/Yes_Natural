@@ -18,8 +18,8 @@ class CustomerUploadDetailsSearch extends CustomerUploadDetails
     public function rules()
     {
         return [
-            [['id', 'phone_no', 'customer_upload_id'], 'integer'],
-            [['ic_no', 'email_id', 'address', 'date_uploaded'], 'safe'],
+            [['id', 'customer_upload_id', 'created_by', 'modified_by'], 'integer'],
+            [['customer_name', 'nric', 'mobile_no', 'email', 'address', 'date_of_birth', 'details', 'date_uploaded', 'date_created', 'date_modified'], 'safe'],
         ];
     }
 
@@ -49,6 +49,8 @@ class CustomerUploadDetailsSearch extends CustomerUploadDetails
             'query' => $query,
         ]);
 
+        $query->orderBy(['date_modified'=>SORT_DESC]);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -60,14 +62,21 @@ class CustomerUploadDetailsSearch extends CustomerUploadDetails
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'phone_no' => $this->phone_no,
+            'date_of_birth' => $this->date_of_birth,
             'customer_upload_id' => $this->customer_upload_id,
             'date_uploaded' => $this->date_uploaded,
+            'created_by' => $this->created_by,
+            'modified_by' => $this->modified_by,
+            'date_created' => $this->date_created,
+            'date_modified' => $this->date_modified,
         ]);
 
-        $query->andFilterWhere(['like', 'ic_no', $this->ic_no])
-            ->andFilterWhere(['like', 'email_id', $this->email_id])
-            ->andFilterWhere(['like', 'address', $this->address]);
+        $query->andFilterWhere(['like', 'customer_name', $this->customer_name])
+            ->andFilterWhere(['like', 'nric', $this->nric])
+            ->andFilterWhere(['like', 'mobile_no', $this->mobile_no])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'details', $this->details]);
 
         return $dataProvider;
     }
