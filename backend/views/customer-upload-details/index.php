@@ -7,18 +7,18 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\CustomerUploadDetailsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Customer Upload Details';
+$this->title = 'Customer Details';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-upload-details-index">
 
-  <br>
+
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title">Search</h3>
+        <h3 class="panel-title ">Search</h3>
       </div>
       <div class="panel-body">
-        <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+          <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
     </div>
 
@@ -28,23 +28,29 @@ $this->title = 'Customer Upload Details';
       </div>
       <div class="panel-body">
         <p class="text-right">
-            <?= Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download PDF', ['download-pdf'], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+            <?= Html::a('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Create', ['create'], ['class' => 'btn btn-success']) ?>
+          <?= Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download PDF', ['download-pdf'], ['class' => 'btn btn-default', 'target'=>'_blank']) ?>
         </p>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-          //  'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+        <div class="table-responsive">
+          <?= GridView::widget([
+              'dataProvider' => $dataProvider,
+            //  'filterModel' => $searchModel,
+              'columns' => [
+                  ['class' => 'yii\grid\SerialColumn'],
 
-              //  'id',
-                'ic_no',
-                'phone_no',
-                'email_id:email',
-                'address:ntext',
+                  'customer_name',
+                  'nric',
+                  'mobile_no',
+                  'email:email',
+                   'address:ntext',
+                   'date_of_birth',
+                   'date_modified',
 
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
+                  ['class' => 'yii\grid\ActionColumn'],
+              ],
+          ]); ?>
+        </div>
+
       </div>
     </div>
 
