@@ -74,6 +74,7 @@ class CustomerUploadDetailsController extends Controller
         $model = new CustomerUploadDetails();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',"Success");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -93,10 +94,9 @@ class CustomerUploadDetailsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-              Yii::$app->session->setFlash('success',"Update Success");
+            Yii::$app->session->setFlash('success',"Update Success");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -112,29 +112,26 @@ class CustomerUploadDetailsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        Yii::$app->session->setFlash('success',"File Deleted");
+
         return $this->redirect(['index']);
     }
 
-    /**
-    *Download the details of the DataProvider into a PDF file based on the searched details
-    * @param integer $id
-    */
     public function actionDownloadPdf(){
+
       ini_set('max_execution_time', 180);
       ini_set("memory_limit", "512M");
 
       $searchModel = new CustomerUploadDetailsSearch();
       $dataProvider = $searchModel->search(Yii::$app->session->get('details'));
 
-      $mpdf = new mPDF('utf-8','A4');
+      $mpdf = new mPDF('utf-8','A4-L');
       $mpdf->content = $this->renderPartial('download-pdf',[
         // 'model'=>$model,
          //'searchModel'=>$searchModel,
          'dataProvider'=>$dataProvider
        ]);
 
-    //  $mpdf->simpleTables =  true;
+      $mpdf->simpleTables =  true;
     //  $mpdf->useSubstitutions=false;
     //  $mpdf->packTableData = true;
       $mpdf->setFooter('{PAGENO}');
