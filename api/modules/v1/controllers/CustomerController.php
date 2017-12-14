@@ -12,7 +12,7 @@ class CustomerController extends ActiveController
 
   public $modelClass = 'api\modules\v1\models\Customer';
 
-  /*public function behaviors()
+  public function behaviors()
     {
         return [
             [
@@ -23,19 +23,97 @@ class CustomerController extends ActiveController
                 ],
             ],
         ];
-    }*/
+    }
 
-  public function actionTest()
+  public function actionDate($date_created_start = null,$date_created_end = null)
   {
-      //  $test = CustomerUploadDetails::find()->where(['customer_name'=>$id])->one();
-      //  print_r($id);die();
-      //  $test = CustomerUploadDetails::find()->where(['customer_name'=>$customer_name])->one();
-    //  return CustomerUploadDetails::findOne(1);
-    //    $test  =CustomerUploadDetails::find()->all();
-      //  return $test;
-      $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
-      return json_encode($arr);
-      //return json_encode(['status'=>'clear','test'=>'tests']);
-    //    return "1111";
+
+    if ($date_created_start == '') {
+        $date_created_start = null;
+    }
+
+    if ($date_created_end == '') {
+        $date_created_end = null;
+    }
+
+    if (is_null($date_created_start) && is_null($date_created_end) ) {
+      $data = CustomerUploadDetails::find()->all();
+      return $data;
+    }elseif (is_null($date_created_end) ) {
+      $data = CustomerUploadDetails::find()->where(['date_created'=>$date_created_start])->all();
+      if (!empty($data) ) {
+          return $data;
+      }else{
+        return array('status'=>false,'data'=> 'No customer/s found');
+      }
+    }else{
+        $data = CustomerUploadDetails::find()->where(['between','date_created',$date_created_start,$date_created_end])->all();
+        if (!empty($data) ) {
+            return $data;
+        }else{
+            return array('status'=>false,'data'=> 'No customer/s found');
+        }
+
+    }
+    //  return json_encode(['status'=>false,'data'=> 'No customer found']);
   }
+
+  public function actionDateup($date_created_start = null,$date_created_end = null, $isupdate=0){
+    if ($isupdate == '') {
+       $isupdate = 0;
+    }
+
+    if ($date_created_start == '') {
+        $date_created_start = null;
+    }
+
+    if ($date_created_end == '') {
+        $date_created_end = null;
+    }
+
+
+    if (is_null($date_created_start) && is_null($date_created_end) ) {
+      $data = CustomerUploadDetails::find()->where(['isupdate'=>$isupdate])->all();
+      return $data;
+    }elseif(is_null($date_created_end) ){
+      $data = CustomerUploadDetails::find()->where(['date_created'=>$date_created_start, 'isupdate'=>$isupdate])->all();
+      if (!empty($data) ) {
+        return $data;
+      }else{
+        return array('status'=>false,'data'=> 'No customer/s found');
+      }
+    }else{
+      $data = CustomerUploadDetails::find()->where(['between','date_created',$date_created_start,$date_created_end])
+            ->andWhere(['isupdate'=>$isupdate])
+            ->all();
+      if (!empty($data) ) {
+        return $data;
+      }else{
+        return array('status'=>false,'data'=> 'No customer/s found');
+      }
+    }
+
+  }
+
+  public function actionIsupdate(){
+    $data = CustomerUploadDetails::find()->where(['isupdate'=>1])->all();
+    if (!empty($data) ) {
+      return $data;
+    }else{
+      return array('status'=>false,'data'=> 'No customer/s found');
+    }
+  }
+
+
+  public function actionDatetesting($dates){
+      $data = CustomerUploadDetails::find()->where(['date_created'=>$dates]);
+      if (!empty($data) ) {
+        return $data;
+      }else{
+        return array('status' => true, 'data'=> 'Student record is successfully updated');
+       return array('status'=>false,'data'=>$student->getErrors());
+       return array('status'=>false,'data'=> 'No Student Found');
+      }
+  }
+
 }
