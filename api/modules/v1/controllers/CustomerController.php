@@ -104,7 +104,6 @@ class CustomerController extends ActiveController
     }
   }
 
-
   public function actionDatetesting($dates){
       $data = CustomerUploadDetails::find()->where(['date_created'=>$dates]);
       if (!empty($data) ) {
