@@ -56,12 +56,15 @@ return [
                 //  'GET test'=>'test',
                   'GET date'=>'date',
                   'GET dateup'=>'dateup',
-                  'GET isupdate'=>'isupdate', 
+                  'GET isupdate'=>'isupdate',
+              //      'GET testing'=>'testing',
+                   'GET testing/{nric}'=>'testing',
+
                   //'POST test' => 'test',
                 ],
                 'tokens' => [
                     '{id}' => '<id:\\w+>',
-                    '{customer_name}' => '<customer_name:\\w+>'
+                    '{nric}' => '<nric:\\w+>'
 
                 ],
               ],
