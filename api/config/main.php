@@ -53,7 +53,10 @@ return [
                 'extraPatterns' => [
               //    'GET customers/<id>' => 'customer/test',
                 //  'GET {customer_name}' => 'test',
-                  'GET test'=>'test',
+                //  'GET test'=>'test',
+                  'GET date'=>'date',
+                  'GET dateup'=>'dateup',
+                  'GET isupdate'=>'isupdate', 
                   //'POST test' => 'test',
                 ],
                 'tokens' => [
