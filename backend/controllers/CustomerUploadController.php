@@ -28,6 +28,7 @@ class CustomerUploadController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+
         ];
     }
 
@@ -96,7 +97,9 @@ class CustomerUploadController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
+          
+            $model->save(false);
             Yii::$app->session->setFlash('success',"File sucessfully updated");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
