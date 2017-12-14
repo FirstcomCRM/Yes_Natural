@@ -15,7 +15,9 @@ $this->title = 'Customer Uploads';
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo strtotime('2017-10-01 12:00:01') ?> <br>
 
+    <?php echo date('d/m/Y',strtotime('2017-10-01')) ?>
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">List</h3>
