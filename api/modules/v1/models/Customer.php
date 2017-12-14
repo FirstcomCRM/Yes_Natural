@@ -27,6 +27,7 @@ class Customer extends ActiveRecord
             [['date_of_birth', 'date_uploaded', 'date_created', 'date_modified'], 'safe'],
             [['customer_upload_id', 'created_by', 'modified_by'], 'integer'],
             [['customer_name', 'email'], 'string', 'max' => 75],
+            [['isupdate'], 'integer'],
             [['nric'], 'string', 'max' => 12],
             [['mobile_no'], 'string', 'max' => 20],
         ];
