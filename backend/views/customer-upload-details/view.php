@@ -43,6 +43,7 @@ $this->title = $model->id;
               //  'modified_by',
                 'date_created',
                 'date_modified',
+                'isupdate',
             ],
         ]) ?>
       </div>
