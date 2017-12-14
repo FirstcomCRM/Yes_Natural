@@ -74,10 +74,14 @@ class CustomerUpload extends \yii\db\ActiveRecord
         $details = new CustomerUploadDetails();
         $details->customer_upload_id = $this->id;
         $details->date_uploaded = $this->date_uploaded;
-        $details->ic_no = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-        $details->phone_no = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-        $details->email_id =$worksheet->getCellByColumnAndRow(2, $row)->getValue();
-        $details->address = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+        $details->customer_name = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+        $details->nric = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+        $details->mobile_no = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+        $details->email = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+        $details->address = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+      //  $details->date_of_birth = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+         $details->date_of_birth = date('Y-m-d',strtotime($worksheet->getCellByColumnAndRow(5, $row)->getFormattedValue()) );
+        $details->details =$worksheet->getCellByColumnAndRow(6, $row)->getValue();
         $details->save(false);
       }
     }
