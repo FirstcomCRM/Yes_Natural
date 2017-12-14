@@ -104,15 +104,18 @@ class CustomerController extends ActiveController
     }
   }
 
-  public function actionDatetesting($dates){
-      $data = CustomerUploadDetails::find()->where(['date_created'=>$dates]);
+  public function actionTesting($nric){
+    //  return $modelClass;
+    return $nric;
+    /*  $data = CustomerUploadDetails::find()->where(['date_created'=>$dates]);
       if (!empty($data) ) {
         return $data;
       }else{
         return array('status' => true, 'data'=> 'Student record is successfully updated');
        return array('status'=>false,'data'=>$student->getErrors());
        return array('status'=>false,'data'=> 'No Student Found');
-      }
+     }*/
+     //return 'test';
   }
 
 }
