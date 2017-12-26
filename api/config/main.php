@@ -58,7 +58,12 @@ return [
                   'GET dateup'=>'dateup',
                   'GET isupdate'=>'isupdate',
               //      'GET testing'=>'testing',
-                   'GET testing/{nric}'=>'testing',
+                  'GET testing/{nric}'=>'testing',
+                  //edr customs
+                  'GET fetch/{id}'=>'fetch',
+                  'DELETE remove/{id}'=>'remove',
+                  'POST new'=>'new',
+                  'PUT edit/{id}'=>'edit',
 
                   //'POST test' => 'test',
                 ],
