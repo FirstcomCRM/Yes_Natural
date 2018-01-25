@@ -94,7 +94,7 @@ class CustomerUploadDetailsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
-              $model->isupdate = 1;
+            $model->isupdate = 1;
             $model->save(false);
             Yii::$app->session->setFlash('success',"Update Success");
             return $this->redirect(['view', 'id' => $model->id]);
