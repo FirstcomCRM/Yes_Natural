@@ -15,9 +15,9 @@ $this->title = 'Customer Uploads';
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <?php echo strtotime('2017-10-01 12:00:01') ?> <br>
+    <?php //echo strtotime('2017-10-01 12:00:01') ?> <br>
 
-    <?php echo date('d/m/Y',strtotime('2017-10-01')) ?>
+    <?php //echo date('d/m/Y',strtotime('2017-10-01')) ?>
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">List</h3>
@@ -25,6 +25,7 @@ $this->title = 'Customer Uploads';
         <div class="panel-body">
           <p>
               <?= Html::a('<i class="fa fa-upload" aria-hidden="true"></i> Import File', ['create'], ['class' => 'btn btn-success']) ?>
+              <?= Html::a('<i class="fa fa-download" aria-hidden="true"></i> Download Template', ['download'], ['class' => 'btn btn-success']) ?>
           </p>
 
             <?= GridView::widget([
