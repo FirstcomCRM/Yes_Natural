@@ -98,7 +98,7 @@ class CustomerUploadController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
-          
+
             $model->save(false);
             Yii::$app->session->setFlash('success',"File sucessfully updated");
             return $this->redirect(['view', 'id' => $model->id]);
@@ -120,6 +120,14 @@ class CustomerUploadController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDownload(){
+        $filename = 'sample_customer.xlsx';
+        $path = Yii::getAlias('@webroot');
+        $path1 = Yii::getAlias('@template');
+        $new_path = $path.'/'.$path1.'/'.$filename;
+        Yii::$app->response->sendFile($new_path);
     }
 
     /**
