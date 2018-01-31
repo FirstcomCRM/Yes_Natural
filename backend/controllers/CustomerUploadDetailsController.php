@@ -73,7 +73,10 @@ class CustomerUploadDetailsController extends Controller
     {
         $model = new CustomerUploadDetails();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
+            $model->card_expiry_date = date('Y-m-d', strtotime($model->card_expiry_date) );
+            $model->date_of_birth = date('Y-m-d', strtotime($model->date_of_birth) );
+            $model->save(false);
             Yii::$app->session->setFlash('success',"Success");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -92,8 +95,11 @@ class CustomerUploadDetailsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->card_expiry_date = date('d M Y', strtotime($model->card_expiry_date) );
+        $model->date_of_birth = date('d M Y', strtotime($model->date_of_birth) );
         if ($model->load(Yii::$app->request->post()) && $model->validate() ) {
+            $model->card_expiry_date = date('Y-m-d', strtotime($model->card_expiry_date) );
+            $model->date_of_birth = date('Y-m-d', strtotime($model->date_of_birth) );
             $model->isupdate = 1;
             $model->save(false);
             Yii::$app->session->setFlash('success',"Update Success");
