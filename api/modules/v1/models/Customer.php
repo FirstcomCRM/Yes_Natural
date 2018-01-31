@@ -20,17 +20,19 @@ class Customer extends ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['customer_name', 'mobile_no', 'date_of_birth'], 'required'],
-            [['email'],'email'],
-            [['address', 'details'], 'string'],
-            [['date_of_birth', 'date_uploaded', 'date_created', 'date_modified'], 'safe'],
-            [['customer_upload_id', 'created_by', 'modified_by'], 'integer'],
-            [['customer_name', 'email'], 'string', 'max' => 75],
-            [['isupdate'], 'integer'],
-            [['nric'], 'string', 'max' => 12],
-            [['mobile_no'], 'string', 'max' => 20],
-        ];
+      return [
+          [['customer_name', 'mobile_no', 'date_of_birth'], 'required'],
+          [['address', 'details','address1','address2'], 'string'],
+          [['email'],'email'],
+          [['date_of_birth', 'card_expiry_date', 'date_created', 'date_modified'], 'safe'],
+          [['created_by', 'modified_by','active'], 'integer'],
+          [['customer_name', 'email'], 'string', 'max' => 75],
+          [['country'],'string','max'=>50],
+          [['zipcode'],'string','max'=>25],
+          [['sex'],'string','max'=>20],
+          [['nric'], 'string', 'max' => 12],
+          [['mobile_no'], 'string', 'max' => 20],
+      ];
     }
 
 
