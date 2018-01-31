@@ -57,13 +57,17 @@ class CustomerUploadDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer_name', 'mobile_no', 'date_of_birth'], 'required'],
-            [['address', 'details'], 'string'],
+            [['customer_name', 'mobile_no', 'date_of_birth','nric','member_code'], 'required'],
+            [['address', 'details','address1','address2'], 'string'],
             [['email'],'email'],
-            [['date_of_birth', 'date_uploaded', 'date_created', 'date_modified'], 'safe'],
-            [['customer_upload_id', 'created_by', 'modified_by'], 'integer'],
+            [['date_of_birth', 'card_expiry_date', 'date_created', 'date_modified'], 'safe'],
+            [['created_by', 'modified_by','active'], 'integer'],
             [['customer_name', 'email'], 'string', 'max' => 75],
+            [['country'],'string','max'=>50],
+            [['zipcode'],'string','max'=>25],
+            [['sex'],'string','max'=>20],
             [['nric'], 'string', 'max' => 12],
+            [['nric','member_code'],'unique'],
             [['mobile_no'], 'string', 'max' => 20],
         ];
     }
@@ -75,19 +79,26 @@ class CustomerUploadDetails extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'member_code'=>'Member Code',
             'customer_name' => 'Customer Name',
             'nric' => 'Nric',
             'mobile_no' => 'Mobile No',
             'email' => 'Email',
-            'address' => 'Address',
+            'address' => 'Address 1',
+            'address1'=>'Address 2',
+            'address2'=>'Address 3',
+            'zipcode'=>'Zip Code',
+            'country'=>'Country',
+            'card_expiry_date'=>'Card Expiry Date',
+            'active'=>'Active',
             'date_of_birth' => 'Date Of Birth',
-            'details' => 'Details',
-            'customer_upload_id' => 'Customer Upload ID',
-            'date_uploaded' => 'Date Uploaded',
+            'details' => 'Remarks',
             'created_by' => 'Created By',
             'modified_by' => 'Modified By',
             'date_created' => 'Date Created',
             'date_modified' => 'Date Modified',
         ];
     }
+
+
 }
