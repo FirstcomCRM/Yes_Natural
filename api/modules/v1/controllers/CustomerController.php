@@ -11,7 +11,8 @@ use common\models\CustomerUploadDetails;
 class CustomerController extends ActiveController
 {
 
-  public $modelClass = 'api\modules\v1\models\Customer';
+//  public $modelClass = 'api\modules\v1\models\Customer';
+  public $modelClass =  'common\models\CustomerUploadDetails';
 
   public function behaviors()
     {
@@ -40,7 +41,7 @@ class CustomerController extends ActiveController
 
   //replaces the yii2 view function
   public function actionFetch($id){
-    $data = CustomerUploadDetails::find()->where(['id'=>$id])->asArray()->all();
+    $data = CustomerUploadDetails::find()->where(['member_code'=>$id])->asArray()->all();
     if (!empty($data)) {
       return array('status'=>'success','data'=>$data);
     //  return $data;
@@ -62,7 +63,7 @@ class CustomerController extends ActiveController
   }
 
   public function actionEdit($id){
-    $model = CustomerUploadDetails::find()->where(['id'=>$id])->one();
+    $model = CustomerUploadDetails::find()->where(['member_code'=>$id])->one();
     if (!empty($model) ) {
         if ($model->validate() ) {
            $model->attributes = \yii::$app->request->post();
@@ -78,7 +79,7 @@ class CustomerController extends ActiveController
 
   //replaces the yii2 delete function
   public function actionRemove($id){
-    $model =CustomerUploadDetails::find()->where(['id'=>$id])->one();
+    $model =CustomerUploadDetails::find()->where(['member_code'=>$id])->one();
     $model->delete();
     return array('status'=>'success', 'message'=>'Customer successfully deleted');
   }
