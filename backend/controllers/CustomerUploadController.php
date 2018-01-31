@@ -68,9 +68,13 @@ class CustomerUploadController extends Controller
     {
         $model = new CustomerUpload();
 
+
+
         if ($model->load(Yii::$app->request->post())  ) {
 
-            //$model->save()
+          //  ini_set('max_execution_time', 390);
+            ini_set('max_execution_time', 180);
+            ini_set("memory_limit", "512M");
             $model->file = UploadedFile::getInstance($model,'file');
             $model->validate();
             if (!empty($model->file)) {
