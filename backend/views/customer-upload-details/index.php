@@ -38,13 +38,18 @@ $this->title = 'Customer Details';
               'columns' => [
                   ['class' => 'yii\grid\SerialColumn'],
 
+                  'member_code',
                   'customer_name',
                   'nric',
                   'mobile_no',
                   'email:email',
-                   'address:ntext',
-                   'date_of_birth',
-                   'date_modified',
+                  'address:ntext',
+
+                  [
+                    'attribute'=>'date_of_birth',
+                    'format' => ['date', 'php:d M Y'],
+                  ],
+                //   'date_modified',
 
                   ['class' => 'yii\grid\ActionColumn'],
               ],

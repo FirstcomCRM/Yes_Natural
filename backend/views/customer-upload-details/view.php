@@ -30,19 +30,37 @@ $this->title = $model->id;
             'model' => $model,
             'attributes' => [
                 //'id',
+                'member_code',
                 'customer_name',
                 'nric',
                 'mobile_no',
                 'email:email',
                 'address:ntext',
-                'date_of_birth',
+                'address1:ntext',
+                'address2:ntext',
+                'sex',
+                'country',
+                'zipcode',
+
+                [
+                  'attribute'=>'card_expiry_date',
+                  'format' => ['date', 'php:d M Y'],
+                ],
+
+                [
+                  'attribute'=>'date_of_birth',
+                  'format' => ['date', 'php:d M Y'],
+                ],
                 'details:ntext',
-              //  'customer_upload_id',
-              //  'date_uploaded',
-              //  'created_by',
-              //  'modified_by',
-                'date_created',
-                'date_modified',
+
+                [
+                  'attribute'=>'date_created',
+                  'format' => ['date', 'php:d M Y'],
+                ],
+                [
+                  'attribute'=>'date_modified',
+                  'format' => ['date', 'php:d M Y'],
+                ],
                 'isupdate',
             ],
         ]) ?>

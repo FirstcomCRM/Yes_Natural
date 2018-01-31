@@ -7,6 +7,18 @@ use kartik\widgets\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\CustomerUploadDetails */
 /* @var $form yii\widgets\ActiveForm */
+
+$active = [
+  '1'=>'Active',
+  '0'=>'Inactive',
+];
+
+$gender = [
+  'male'=>'male',
+  'female'=>'female',
+];
+
+
 ?>
 
 <div class="customer-upload-details-form">
@@ -26,6 +38,8 @@ use kartik\widgets\DatePicker;
 ]);
  ?>
 
+    <?= $form->field($model, 'member_code')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'customer_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'nric')->textInput(['maxlength' => true]) ?>
@@ -36,6 +50,27 @@ use kartik\widgets\DatePicker;
 
     <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
 
+    <?= $form->field($model, 'address1')->textarea(['rows' => 3]) ?>
+
+    <?= $form->field($model, 'address2')->textarea(['rows' => 3]) ?>
+
+    <?= $form->field($model, 'zipcode')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'country')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'sex')->dropDownList($gender); ?>
+
+    <?php echo $form->field($model, 'card_expiry_date')->widget(DatePicker::classname(), [
+
+      'convertFormat'=>true,
+      'readonly' => true,
+      'pluginOptions' => [
+        'autoclose'=>true,
+      //  'format' => 'mm/dd/yyyy'
+        'format' => 'php:d M Y',
+      ]
+    ]); ?>
+
     <?php echo $form->field($model, 'date_of_birth')->widget(DatePicker::classname(), [
 
       'convertFormat'=>true,
@@ -43,13 +78,15 @@ use kartik\widgets\DatePicker;
       'pluginOptions' => [
         'autoclose'=>true,
       //  'format' => 'mm/dd/yyyy'
-        'format' => 'php:Y-m-d',
+        'format' => 'php:d M Y',
       ]
     ]); ?>
 
     <?= $form->field($model, 'details')->textarea(['rows' => 3]) ?>
 
     <?= $form->field($model, 'date_created')->textInput(['readOnly'=>true]) ?>
+
+    <?= $form->field($model, 'active')->dropDownList($active); ?>
 
     <div class="form-group col-md-3">
         <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Create' : 'Update',
