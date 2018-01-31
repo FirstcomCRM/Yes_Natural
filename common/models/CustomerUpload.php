@@ -68,22 +68,27 @@ class CustomerUpload extends \yii\db\ActiveRecord
       die('Error');
     }
 
-    foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-      $highestRow = $worksheet->getHighestRow();
-      for ($row=2; $row <= $highestRow ; $row++) {
-        $details = new CustomerUploadDetails();
-        $details->customer_upload_id = $this->id;
-        $details->date_uploaded = $this->date_uploaded;
-        $details->customer_name = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-        $details->nric = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-        $details->mobile_no = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-        $details->email = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-        $details->address = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-      //  $details->date_of_birth = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-         $details->date_of_birth = date('Y-m-d',strtotime($worksheet->getCellByColumnAndRow(5, $row)->getFormattedValue()) );
-        $details->details =$worksheet->getCellByColumnAndRow(6, $row)->getValue();
-        $details->save(false);
-      }
+    $sheet = $objPHPExcel->getSheet(0);
+    $highestRow = $sheet->getHighestRow();
+    $highestColumn = $sheet->getHighestColumn();
+
+    for ($row=2; $row<=$highestRow ; $row++) {
+      $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+      $details = new CustomerUploadDetails();
+      $details->member_code =  $rowData[0][0];
+      $details->nric = $rowData[0][1];
+      $details->customer_name = $rowData[0][2];
+      $details->address =$rowData[0][3];
+      $details->address1 = $rowData[0][4];
+      $details->address2 = $rowData[0][5];
+      $details->country = $rowData[0][6];
+      $details->zipcode = $rowData[0][7];
+      $details->email = $rowData[0][8];
+      $details->mobile_no = $rowData[0][11];
+      $details->active = $rowData[0][18];
+      $details->date_of_birth = date('Y-m-d',strtotime($rowData[0][21]));
+      $details->details = $rowData[0][22];
+      $details->save(false);
     }
 
   }
