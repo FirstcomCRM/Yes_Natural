@@ -18,8 +18,8 @@ class CustomerUploadDetailsSearch extends CustomerUploadDetails
     public function rules()
     {
         return [
-            [['id', 'customer_upload_id', 'created_by', 'modified_by'], 'integer'],
-            [['customer_name', 'nric', 'mobile_no', 'email', 'address', 'date_of_birth', 'details', 'date_uploaded', 'date_created', 'date_modified'], 'safe'],
+            [['id', 'created_by', 'modified_by'], 'integer'],
+            [['customer_name', 'nric', 'mobile_no', 'email', 'address', 'date_of_birth', 'details', 'date_created', 'date_modified'], 'safe'],
         ];
     }
 
@@ -63,8 +63,8 @@ class CustomerUploadDetailsSearch extends CustomerUploadDetails
         $query->andFilterWhere([
             'id' => $this->id,
             'date_of_birth' => $this->date_of_birth,
-            'customer_upload_id' => $this->customer_upload_id,
-            'date_uploaded' => $this->date_uploaded,
+        //    'customer_upload_id' => $this->customer_upload_id,
+        //    'date_uploaded' => $this->date_uploaded,
             'created_by' => $this->created_by,
             'modified_by' => $this->modified_by,
             'date_created' => $this->date_created,
