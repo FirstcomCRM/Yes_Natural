@@ -74,7 +74,14 @@ class CustomerUpload extends \yii\db\ActiveRecord
 
     for ($row=2; $row<=$highestRow ; $row++) {
       $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
-      $details = new CustomerUploadDetails();
+      $code = $rowData[0][0];
+      $data = CustomerUploadDetails::find()->where(['member_code'=>$code])->one();
+      if (!empty($data)) {
+        $details = $data;
+      }else{
+        $details = new CustomerUploadDetails();
+      }
+
       $details->member_code =  $rowData[0][0];
       $details->nric = $rowData[0][1];
       $details->customer_name = $rowData[0][2];
