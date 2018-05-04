@@ -74,7 +74,7 @@ class CustomerUploadDetailsSearch extends CustomerUploadDetails
         $query->andFilterWhere(['like', 'customer_name', $this->customer_name])
             ->andFilterWhere(['like', 'nric', $this->nric])
             ->andFilterWhere(['like', 'mobile_no', $this->mobile_no])
-            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'email', $this->email ])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'details', $this->details]);
 
