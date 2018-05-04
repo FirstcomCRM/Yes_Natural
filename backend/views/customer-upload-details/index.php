@@ -50,8 +50,12 @@ $this->title = 'Customer Details';
                     'format' => ['date', 'php:d M Y'],
                   ],
                 //   'date_modified',
-
-                  ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'header'=>'Action',
+                    'class'=>'yii\grid\ActionColumn',
+                    'template'=>'{view}',
+                ],
+                //  ['class' => 'yii\grid\ActionColumn'],
               ],
           ]); ?>
         </div>
