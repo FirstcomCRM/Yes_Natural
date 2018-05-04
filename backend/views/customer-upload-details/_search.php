@@ -17,9 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'customer_name') ?>
 
-    <?= $form->field($model, 'nric') ?>
-
-    <?= $form->field($model, 'email') ?>
+    <?= $form->field($model, 'mobile_no') ?>
 
     <div class="form-group">
         <?= Html::submitButton('<i class="fa fa-search" aria-hidden="true"></i> Search', ['class' => 'btn btn-primary']) ?>
