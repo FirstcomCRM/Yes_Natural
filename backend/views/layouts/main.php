@@ -63,17 +63,20 @@ AppAsset::register($this);
                     </a>
                 </li>
 
-                <li class="sub-menu">
-                    <a href="javascript:;" >
-                        <i class="fa fa-upload" aria-hidden="true"></i><span>Imports</span>
-                    </a>
-                    <ul class="sub">
-                          <li><?php echo Html::a('<i class="fa fa-angle-right" aria-hidden="true"></i> Customer',['customer-upload/index']) ?></li>
-                    <!---<li><a  href="#">Extra Link1</a></li>
-                        <li><a  href="#">Extra Link2</a></li>
-                        <li><a  href="#">Extra Link3</a></li>--->
-                    </ul>
-                </li>
+                <?php $userid=Yii::$app->user->id; ?>
+                <?php if ($userid == 3): ?>
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-upload" aria-hidden="true"></i><span>Imports</span>
+                      </a>
+                      <ul class="sub">
+                            <li><?php echo Html::a('<i class="fa fa-angle-right" aria-hidden="true"></i> Customer',['customer-upload/index']) ?></li>
+                      <!---<li><a  href="#">Extra Link1</a></li>
+                          <li><a  href="#">Extra Link2</a></li>
+                          <li><a  href="#">Extra Link3</a></li>--->
+                      </ul>
+                  </li>
+                <?php endif; ?>
 
                 <li class="sub-menu">
                     <a href="javascript:;" >
