@@ -5,7 +5,9 @@ namespace api\modules\v1\controllers;
 use Yii;
 use yii\rest\ActiveController;
 use yii\web\Response;
-use common\models\CustomerUploadDetails;
+use yii\data\ActiveDataProvider;
+use api\modules\v1\models\Customer;
+//use common\models\CustomerUploadDetails;
 //use api\modules\v1\models\Customer;
 
 class CustomerController extends ActiveController
@@ -36,12 +38,26 @@ class CustomerController extends ActiveController
     unset($actions['update']);
     return $actions;
   }
-
+  
   //edr custom API functions
 
   //replaces the yii2 view function
+  //Fetch: retrieve a customer data using the CRM id
   public function actionFetch($id){
-    $data = CustomerUploadDetails::find()->where(['member_code'=>$id])->asArray()->all();
+  //  $data = CustomerUploadDetails::find()->where(['id'=>$id])->asArray()->one();
+    $data = Customer::find()->where(['id'=>$id])->asArray()->one();
+    if (!empty($data)) {
+      return array('status'=>'success','data'=>$data);
+    //  return $data;
+    }else{
+      return array('status'=>false,'data'=> 'No customer/s found');
+    }
+  }
+
+  //Fetch: retrieve a customer data using the CRM member_code
+  public function actionFetchCode($member_code){
+  //  $data = CustomerUploadDetails::find()->where(['member_code'=>$member_code])->asArray()->one();
+    $data = Customer::find()->where(['member_code'=>$member_code])->asArray()->one();
     if (!empty($data)) {
       return array('status'=>'success','data'=>$data);
     //  return $data;
@@ -52,7 +68,8 @@ class CustomerController extends ActiveController
 
   //replaces the yii2 create function;
   public function actionNew(){
-    $model =  new CustomerUploadDetails();
+  //  $model =  new CustomerUploadDetails();
+    $model =  new Customer();
     $model->attributes = \yii::$app->request->post();
     if ($model->validate() ) {
       $model->save();
@@ -62,8 +79,27 @@ class CustomerController extends ActiveController
     }
   }
 
+  //Edit: Update a customer information using the CRM id
   public function actionEdit($id){
-    $model = CustomerUploadDetails::find()->where(['member_code'=>$id])->one();
+    //$model = CustomerUploadDetails::find()->where(['id'=>$id])->one();
+    $model = Customer::find()->where(['id'=>$id])->one();
+    if (!empty($model) ) {
+        if ($model->validate() ) {
+           $model->attributes = \yii::$app->request->post();
+           $model->save();
+           return array('status'=>true, 'message'=>'Update success', 'data'=>$model->attributes);
+        }else{
+            return array('status'=>false, 'data'=>$model->getErrors());
+        }
+    }else{
+      return array('status'=>false,'data'=> 'No customer/s found');
+    }
+  }
+
+  //Edit: Update a customer information using the CRM member code
+  public function actionEditCode($member_code){
+  //  $model = CustomerUploadDetails::find()->where(['member_code'=>$member_code])->one();
+    $model = Customer::find()->where(['member_code'=>$member_code])->one();
     if (!empty($model) ) {
         if ($model->validate() ) {
            $model->attributes = \yii::$app->request->post();
@@ -78,11 +114,22 @@ class CustomerController extends ActiveController
   }
 
   //replaces the yii2 delete function
+  //Remove: Delete a customer's data using CRM id
   public function actionRemove($id){
-    $model =CustomerUploadDetails::find()->where(['member_code'=>$id])->one();
+    //$model =CustomerUploadDetails::find()->where(['id'=>$id])->one();
+    $model =Customer::find()->where(['id'=>$id])->one();
     $model->delete();
-    return array('status'=>'success', 'message'=>'Customer successfully deleted');
+    return array('status'=>true, 'message'=>'Customer successfully deleted');
   }
+
+  //Remove: Delete a customer's data using CRM member_code
+  public function actionRemoveCode($member_code){
+  //  $model =CustomerUploadDetails::find()->where(['member_code'=>$member_code])->one();
+    $model =Customer::find()->where(['member_code'=>$member_code])->one();
+    $model->delete();
+    return array('status'=>true, 'message'=>'Customer successfully deleted');
+  }
+
 
   //additional HTTP GET methods
   public function actionDate($date_created_start = null,$date_created_end = null)
@@ -97,25 +144,38 @@ class CustomerController extends ActiveController
     }
 
     if (is_null($date_created_start) && is_null($date_created_end) ) {
-      $data = CustomerUploadDetails::find()->all();
-      return $data;
+    //  $data = CustomerUploadDetails::find();
+      $data = Customer::find();
+  //    return $data;
     }elseif (is_null($date_created_end) ) {
-      $data = CustomerUploadDetails::find()->where(['date_created'=>$date_created_start])->all();
+      //$data = CustomerUploadDetails::find()->where(['date_created'=>$date_created_start]);
+      $data = Customer::find()->where(['date_created'=>$date_created_start]);
       if (!empty($data) ) {
-          return $data;
+      //    return $data;
       }else{
         return array('status'=>false,'data'=> 'No customer/s found');
       }
     }else{
-        $data = CustomerUploadDetails::find()->where(['between','date_created',$date_created_start,$date_created_end])->all();
+      //  $data = CustomerUploadDetails::find()->where(['between','date_created',$date_created_start,$date_created_end]);
+        $data = Customer::find()->where(['between','date_created',$date_created_start,$date_created_end]);
         if (!empty($data) ) {
-            return $data;
+        //    return $data;
         }else{
             return array('status'=>false,'data'=> 'No customer/s found');
         }
 
     }
-    //  return json_encode(['status'=>false,'data'=> 'No customer found']);
+
+    $dataProvider = new ActiveDataProvider([
+        'query' => $data,
+        'pagination'=>[
+          'pageSize'=>50,
+       ],
+
+     ]);
+
+    return $dataProvider;
+    // insert here??
   }
 
   public function actionDateup($date_created_start = null,$date_created_end = null, $isupdate=0){
@@ -133,17 +193,20 @@ class CustomerController extends ActiveController
 
 
     if (is_null($date_created_start) && is_null($date_created_end) ) {
-      $data = CustomerUploadDetails::find()->where(['isupdate'=>$isupdate])->all();
+    //  $data = CustomerUploadDetails::find()->where(['isupdate'=>$isupdate])->all();
+      $data = Customer::find()->where(['isupdate'=>$isupdate])->all();
       return $data;
     }elseif(is_null($date_created_end) ){
-      $data = CustomerUploadDetails::find()->where(['date_created'=>$date_created_start, 'isupdate'=>$isupdate])->all();
+    //  $data = CustomerUploadDetails::find()->where(['date_created'=>$date_created_start, 'isupdate'=>$isupdate])->all();
+      $data = Customer::find()->where(['date_created'=>$date_created_start, 'isupdate'=>$isupdate])->all();
       if (!empty($data) ) {
         return $data;
       }else{
         return array('status'=>false,'data'=> 'No customer/s found');
       }
     }else{
-      $data = CustomerUploadDetails::find()->where(['between','date_created',$date_created_start,$date_created_end])
+    //  $data = CustomerUploadDetails::find()->where(['between','date_created',$date_created_start,$date_created_end])
+      $data = Customer::find()->where(['between','date_created',$date_created_start,$date_created_end])
             ->andWhere(['isupdate'=>$isupdate])
             ->all();
       if (!empty($data) ) {
@@ -153,10 +216,13 @@ class CustomerController extends ActiveController
       }
     }
 
+    //insert here??
+
   }
 
   public function actionIsupdate(){
-    $data = CustomerUploadDetails::find()->where(['isupdate'=>1])->all();
+    //$data = CustomerUploadDetails::find()->where(['isupdate'=>1])->all();
+    $data = Customer::find()->where(['isupdate'=>1])->all();
     if (!empty($data) ) {
       return $data;
         //return gettype($data);
@@ -167,7 +233,23 @@ class CustomerController extends ActiveController
 
   public function actionTesting($nric){
     //  return $modelClass;
-    return $nric;
+    $data = CustomerUploadDetails::find();
+
+    $dataProvider = new ActiveDataProvider([
+        'query' => $data,
+        'pagination'=>[
+          'pageSize'=>50,
+       ],
+
+     ]);
+    return array('status'=>'true', 'message'=>'Records Found', 'data'=>$dataProvider->getModels());
+  //  return array('status'=>'true', 'message'=>'Records Found', 'data'=>$dataProvider->query->all());
+    //  return array($dataProvider);
+    //ini_set('max_execution_time', 180);
+    //ini_set("memory_limit", "512M");
+    //$data = CustomerUploadDetails::find()->all();
+//    return $nric;
+  //  return $data;
     /*  $data = CustomerUploadDetails::find()->where(['date_created'=>$dates]);
       if (!empty($data) ) {
         return $data;

@@ -51,25 +51,27 @@ return [
                 'class'=>'yii\rest\UrlRule',
                 'controller'=>'v1/customer',
                 'extraPatterns' => [
-              //    'GET customers/<id>' => 'customer/test',
-                //  'GET {customer_name}' => 'test',
-                //  'GET test'=>'test',
                   'GET date'=>'date',
                   'GET dateup'=>'dateup',
                   'GET isupdate'=>'isupdate',
-              //      'GET testing'=>'testing',
+
                   'GET testing/{nric}'=>'testing',
                   //edr customs
+                    //'GET fetch/{member_code}'=>'fetch',
                   'GET fetch/{id}'=>'fetch',
+                  'GET fetch-code/{member_code}'=>'fetch-code',
                   'DELETE remove/{id}'=>'remove',
+                  'DELETE remove-code/{member_code}'=>'remove-code',
                   'POST new'=>'new',
                   'PUT edit/{id}'=>'edit',
+                  'PUT edit-code/{member_code}'=>'edit-code',
 
                   //'POST test' => 'test',
                 ],
                 'tokens' => [
                     '{id}' => '<id:\\w+>',
-                    '{nric}' => '<nric:\\w+>'
+                    '{nric}' => '<nric:\\w+>',
+                    '{member_code}' => '<member_code:\\w+>',
 
                 ],
               ],
